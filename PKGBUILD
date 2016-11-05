@@ -1,4 +1,5 @@
-# Maintainer: Florian Bruhin (The-Compiler) <archlinux.org@the-compiler.org>
+# Maintainer: Daniel Hahler <archlinux+aur@thequod.de>
+# Contributor: Florian Bruhin (The-Compiler) <archlinux.org@the-compiler.org>
 # Contributor: Daniel Micay <danielmicay@gmail.com>
 # Contributor: Sébastien Luttringer <seblu@aur.archlinux.org>
 # Contributor: Angel Velasquez <angvp@archlinux.org>
@@ -6,10 +7,10 @@
 # Contributor: dibblethewrecker dibblethewrecker.at.jiwe.dot.org
 
 _pkgname=rxvt-unicode
-pkgname=rxvt-unicode-patched
+pkgname=rxvt-unicode-patched-wcwidthcallback
 pkgver=9.22
 pkgrel=6
-pkgdesc='Unicode enabled rxvt-clone terminal emulator (urxvt) with fixed font spacing'
+pkgdesc='Unicode enabled rxvt-clone terminal emulator (urxvt) with fixed font spacing and wcwidth callback'
 arch=('i686' 'x86_64')
 url='http://software.schmorp.de/pkg/rxvt-unicode.html'
 license=('GPL')
@@ -21,26 +22,39 @@ source=(http://dist.schmorp.de/rxvt-unicode/$_pkgname-$pkgver.tar.bz2
         'urxvt.desktop'
         'urxvtc.desktop'
         'urxvt-tabbed.desktop'
-        'font-width-fix.patch'
+        # 'font-width-fix.patch'
         'line-spacing-fix.patch'
         'https://gist.githubusercontent.com/alexoj/df5bae7a4825cb596581/raw/75a1e75c2ae1ec5c0db68a29f8a6821e9e3d87a5/sgr-mouse-mode.patch'
-        'enable-wide-glyphs.patch')
+        # 'enable-wide-glyphs.patch'
+        'https://github.com/exg/rxvt-unicode/compare/master...blueyed:wcwidth-hack.patch')
 sha1sums=('e575b869782fbfed955f84f48b204ec888d91ba1'
           'b5a4507f85ebb7bac589db2e07d9bc40106720d9'
           '62c4ffecfce6967def394dd4d418b68652372ea2'
           'cd204d608d114d39c80331efe0af0231ad6b7e18'
-          '01ee8f212add79a158dcd4ed78d0ea1324bdc59b'
+          # '01ee8f212add79a158dcd4ed78d0ea1324bdc59b'
           'b7fde1c46af45e831828738874f14b092b1e795f'
           'dfbc8729c545105eff21e20ef3a4a3841a68a192'
-          '59f5c5838c6f49521527146053eb439d96a25179')
+          # '59f5c5838c6f49521527146053eb439d96a25179'
+          'SKIP')
 
 prepare() {
   cd $_pkgname-$pkgver
 
-  patch -p0 -i ../font-width-fix.patch
+  # Patches from rxvt-unicode-patched.
+  # The font ones are controversial, but used everywhere already.
+
+  # This is wrong (and was rejected on the ML):
+  # Would not handle "🀄 " from Symbola correctly
+  # (g.xOff: 15, g.width: 17, g.x: 1).
+  # patch -p0 -i ../font-width-fix.patch
+
   patch -p0 -i ../line-spacing-fix.patch
   patch -p0 -i ../sgr-mouse-mode.patch
-  # patch -p1 -i ../enable-wide-glyphs.patch
+
+  # Remove new files to make the patch apply when rebuilding.  Is there a option for `patch`?!
+  rm src/rxvtwcwidth.C
+  rm src/rxvtwcwidth.h
+  patch -p1 -i ../master...blueyed:wcwidth-hack.patch
 }
 
 build() {
