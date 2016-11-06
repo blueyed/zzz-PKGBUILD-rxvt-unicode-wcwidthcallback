@@ -55,8 +55,8 @@ prepare() {
   patch -p0 -i ../sgr-mouse-mode.patch
 
   # Remove new files to make the patch apply when rebuilding.  Is there a option for `patch`?!
-  rm src/rxvtwcwidth.C
-  rm src/rxvtwcwidth.h
+  rm -f src/rxvtwcwidth.C
+  rm -f src/rxvtwcwidth.h
   patch -p1 -i ../master...blueyed:wcwidth-hack.patch
 }
 
