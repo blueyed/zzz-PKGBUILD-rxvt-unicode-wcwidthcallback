@@ -1,3 +1,6 @@
+# Arch Linux PKGBUILD, mainly for improved width handling of (wide) glyphs.
+# WIP at https://github.com/blueyed/rxvt-unicode/tree/wcwidth-hack.
+#
 # Maintainer: Daniel Hahler <archlinux+aur@thequod.de>
 # Contributor: Florian Bruhin (The-Compiler) <archlinux.org@the-compiler.org>
 # Contributor: Daniel Micay <danielmicay@gmail.com>
