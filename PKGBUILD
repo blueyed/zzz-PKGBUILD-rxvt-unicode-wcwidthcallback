@@ -1,6 +1,6 @@
 # Arch Linux PKGBUILD, mainly for improved width handling of (wide) glyphs.
-# WIP at https://github.com/blueyed/rxvt-unicode/tree/wcwidth-hack.
-# README: https://github.com/blueyed/rxvt-unicode/blob/wcwidth-hack/README.md
+# WIP at https://github.com/blueyed/rxvt-unicode/pull/1.
+# README: https://github.com/blueyed/rxvt-unicode/pull/1/files#diff-04c6e90faac2675aa89e2176d2eec7d8.
 
 # You can remove "--enable-wcwidthpreload" to not add LD_PRELOAD for the
 # child process automatically, and then export it manually for more control.
@@ -32,7 +32,7 @@ source=(http://dist.schmorp.de/rxvt-unicode/$_pkgname-$pkgver.tar.bz2
         'urxvt-tabbed.desktop'
         'line-spacing-fix.patch'
         'https://gist.githubusercontent.com/alexoj/df5bae7a4825cb596581/raw/75a1e75c2ae1ec5c0db68a29f8a6821e9e3d87a5/sgr-mouse-mode.patch'
-        'https://github.com/exg/rxvt-unicode/compare/master...blueyed:wcwidth-hack.patch')
+        'wcwidthcallback.patch::https://github.com/blueyed/rxvt-unicode/pull/1.patch')
 sha1sums=('e575b869782fbfed955f84f48b204ec888d91ba1'
           'b5a4507f85ebb7bac589db2e07d9bc40106720d9'
           '62c4ffecfce6967def394dd4d418b68652372ea2'
@@ -55,7 +55,7 @@ prepare() {
 
   # Remove new files to make the patch apply when rebuilding.  Is there a option for `patch`?!
   rm -f src/rxvtwcwidth.C src/rxvtwcwidth.h README.md
-  patch -Np1 -i ../master...blueyed:wcwidth-hack.patch
+  patch -Np1 -i ../wcwidthcallback.patch
 }
 
 build() {
