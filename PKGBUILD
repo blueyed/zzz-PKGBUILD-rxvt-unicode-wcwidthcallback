@@ -39,7 +39,7 @@ sha1sums=('e575b869782fbfed955f84f48b204ec888d91ba1'
           'cd204d608d114d39c80331efe0af0231ad6b7e18'
           'b7fde1c46af45e831828738874f14b092b1e795f'
           'dfbc8729c545105eff21e20ef3a4a3841a68a192'
-          '3ecc1d27dd040f0421aae2333ff37cccfb8fb3aa')
+          'SKIP')
 
 prepare() {
   cd $_pkgname-$pkgver
