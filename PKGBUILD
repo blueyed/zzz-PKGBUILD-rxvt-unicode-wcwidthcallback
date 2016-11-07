@@ -1,6 +1,11 @@
 # Arch Linux PKGBUILD, mainly for improved width handling of (wide) glyphs.
 # WIP at https://github.com/blueyed/rxvt-unicode/tree/wcwidth-hack.
-#
+# README: https://github.com/blueyed/rxvt-unicode/blob/wcwidth-hack/README.md
+
+# You can remove "--enable-wcwidthpreload" to not add LD_PRELOAD for the
+# child process automatically, and then export it manually for more control.
+# See the README linked above.
+
 # Maintainer: Daniel Hahler <archlinux+aur@thequod.de>
 # Contributor: Florian Bruhin (The-Compiler) <archlinux.org@the-compiler.org>
 # Contributor: Daniel Micay <danielmicay@gmail.com>
@@ -34,7 +39,7 @@ sha1sums=('e575b869782fbfed955f84f48b204ec888d91ba1'
           'cd204d608d114d39c80331efe0af0231ad6b7e18'
           'b7fde1c46af45e831828738874f14b092b1e795f'
           'dfbc8729c545105eff21e20ef3a4a3841a68a192'
-          'a59466b5987d08d3e590fbd6b0ec527c448f93b5')
+          '00409f7b486451d6391b8a64c654b8ea686d17ac')
 
 prepare() {
   cd $_pkgname-$pkgver
@@ -56,7 +61,7 @@ prepare() {
 build() {
   cd $_pkgname-$pkgver
 
-  # we disable smart-resize (FS#34807)
+  # we disable smart-resize (FS#34807); will be fixed in 9.23.
   # do not specify --with-terminfo (FS#46424)
   ./configure \
     --prefix=/usr \
@@ -83,6 +88,8 @@ build() {
     --enable-xft \
     --enable-xim \
     --enable-xterm-scroll \
+    --enable-debug-wcwidth \
+    --enable-wcwidthpreload \
     --disable-frills
   make
 }
