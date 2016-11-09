@@ -1,1 +1,8 @@
-PKGBUILD
+Arch Linux PKGBUILD, mainly for improved width handling of (wide) glyphs via
+wcwidth(3) callback.
+
+WIP at https://github.com/blueyed/rxvt-unicode/pull/1.
+README: https://github.com/blueyed/rxvt-unicode/blob/wcwidth-hack/README.md
+
+Packaging for Arch Linux (this PKGBUILD) has moved to
+https://aur.archlinux.org/packages/rxvt-unicode-wcwidthcallback.
